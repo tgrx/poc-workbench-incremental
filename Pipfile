@@ -9,10 +9,10 @@ isort = "*"
 
 [packages]
 alembic = "*"
+dynaconf = {extras = ["yaml"],version = "*"}
 mysqlclient = "*"
 sqlacodegen = "*"
 sqlalchemy = "*"
-dynaconf = {extras = ["yaml"],version = "*"}
 
 [requires]
 python_version = "3.8"
