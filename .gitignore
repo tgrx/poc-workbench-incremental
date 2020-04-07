@@ -1,6 +1,4 @@
-#####################
 *$py.class
-**/.DS_Store
 *.cover
 *.egg
 *.egg-info/
@@ -13,11 +11,11 @@
 *.sage.py
 *.so
 *.spec
-.Python
 .cache
 .coverage
 .coverage.*
 .dmypy.json
+.DS_Store
 .eggs/
 .hypothesis/
 .idea/
@@ -27,9 +25,11 @@
 .nox/
 .pyre/
 .pytest_cache/
+.Python
 .python-version
 .ropeproject
 .scrapy
+.secrets.*
 .spyderproject
 .spyproject
 .static/
@@ -37,9 +37,6 @@
 .venv
 .webassets-cache
 /site
-ENV/
-MANIFEST
-Pipfile.lock
 __pycache__/
 __pypackages__/
 build/
@@ -55,6 +52,7 @@ docs/_build/
 downloads/
 eggs/
 env.bak/
+ENV/
 env/
 htmlcov/
 instance/
@@ -62,11 +60,13 @@ ipython_config.py
 lib/
 lib64/
 local_settings.py
+MANIFEST
 nosetests.xml
 parts/
 pip-delete-this-directory.txt
 pip-log.txt
 pip-wheel-metadata/
+Pipfile.lock
 profile_default/
 sdist/
 share/python-wheels/
