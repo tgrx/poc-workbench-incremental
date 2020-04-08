@@ -28,8 +28,8 @@ all: reflect reset_db1 revision format
 
 
 reflect:
-	@pipenv run sqlacodegen "${DB1}"
-	pipenv run sqlacodegen --outfile "${REFLECTION}" "${DB1}"
+	@pipenv run sqlacodegen ${DB1}
+	pipenv run sqlacodegen --outfile "${REFLECTION}" ${DB1}
 	mv "${MODEL}" "${MODEL}.bak.${ATM}"
 	mv "${REFLECTION}" "${MODEL}"
 
