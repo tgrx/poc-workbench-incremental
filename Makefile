@@ -51,8 +51,7 @@ reset_db0:
 
 
 wipe: reset_db0 reset_db1
-	rm -rf "${MODEL}"
-	touch "${MODEL}"
+	echo "from sqlalchemy.ext.declarative import declarative_base\n\nBase = declarative_base()" > "${MODEL}"
 	rm -rf "${REFLECTION}"
 	rm -rf "${ARTIFACTS}/*.bak"
 	rm -rf "${MIGRATIONS}"
