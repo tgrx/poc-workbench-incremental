@@ -1,4 +1,4 @@
-.PHONY: install all reflect revision migrate format reset_db0 reset_db1 wipe
+.PHONY: install all reflect_db1 reflect_db0 revision migrate format reset_db0 reset_db1 wipe
 
 
 HERE := $(shell pwd)
@@ -12,6 +12,7 @@ MODEL := ${ARTIFACTS}/model.py
 REFLECTION := ${ARTIFACTS}/reflection.py
 
 ATM := $(shell date +%Y%m%d_%H%M%S)
+DB0 := $(shell pipenv run dynaconf list | grep DB0 | sed -e 's/.*DB0: *//g')
 DB1 := $(shell pipenv run dynaconf list | grep DB1 | sed -e 's/.*DB1: *//g')
 
 
@@ -24,12 +25,19 @@ install:
 	pipenv update --dev
 
 
-all: reflect reset_db1 revision format
+all: reflect_db1 revision format reset_db1
 
 
-reflect:
+reflect_db1:
 	@pipenv run sqlacodegen ${DB1}
 	pipenv run sqlacodegen --outfile "${REFLECTION}" ${DB1}
+	mv "${MODEL}" "${MODEL}.bak.${ATM}"
+	mv "${REFLECTION}" "${MODEL}"
+
+
+reflect_db0:
+	@pipenv run sqlacodegen ${DB0} > /dev/null 2>&1
+	pipenv run sqlacodegen --outfile "${REFLECTION}" ${DB0}
 	mv "${MODEL}" "${MODEL}.bak.${ATM}"
 	mv "${REFLECTION}" "${MODEL}"
 
