@@ -1,5 +1,14 @@
 # Proof of Concept
 
+## TL;DR
+
+1. set up DB-0 and DB-1 (DB-1 will be wiped)
+1. apply Workbench to DB-1
+1. run `make all`
+1. observe the created migration scripts
+1. apply them to DB-0 by `make migrate`
+
+
 ## Goal
 
 To automate creating of incremental migrations
@@ -53,12 +62,12 @@ The only point we cannot automate
 is to apply WB-1 to DB-1. So it MUST be done manually.
 One MUST provide links to the DB-0 and DB-1 as well.
 
+So, basically, one should just apply
+the Workbench onto DB-1, and run `make all`.
+After the review migrations can be applied
+by issuing `make migrate` command.
+
 This POC uses Dynaconf to configure all that stuff.
 So links to the DB MIGHT be given either via proper ENVs
 or via config/.secrets.yml. Parameter names are described
 in the config/settings.yml in `default` section.
-
-1. be ready with WB-1, and DB-* urls
-1. apply WB-1 to DB-1
-1. run `make`
-1. observe migration scripts
