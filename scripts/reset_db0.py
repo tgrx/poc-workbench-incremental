@@ -11,5 +11,5 @@ def reset_db(db_url):
 
 
 if __name__ == "__main__":
-    assert settings.DB1, "DB1 url is not configured"
+    assert settings.DB0, "DB0 url is not configured"
     reset_db(settings.DB0)

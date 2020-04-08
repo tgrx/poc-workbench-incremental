@@ -5,7 +5,7 @@ from dynaconf import settings
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from artifacts.models import Base
+from artifacts.model import Base
 
 config = context.config
 

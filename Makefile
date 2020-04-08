@@ -1,25 +1,18 @@
-.PHONY: revision migrate install format reset_db1
+.PHONY: install all reflect revision migrate format reset_db0 reset_db1 wipe
 
+
+HERE := $(shell pwd)
 VENV := $(shell pipenv --venv)
-PYTHONPATH := $(shell pwd)
 
+ARTIFACTS := ${HERE}/artifacts
+MIGRATIONS := ${HERE}/migrations/versions
+SCRIPTS := ${HERE}/scripts
 
-reflect:
-	pipenv run sqlacodegen --outfile artifacts/models1.py $(shell pipenv run dynaconf list | grep DB1 | sed -e 's/.*DB1: *//g')
-	mv artifacts/models.py artifacts/models.py.bak.$(shell date +%Y%m%d_%H%M%S)
-	mv artifacts/models1.py artifacts/models.py
+MODEL := ${ARTIFACTS}/model.py
+REFLECTION := ${ARTIFACTS}/reflection.py
 
-
-revision:
-	PYTHONPATH="${PYTHONPATH}" pipenv run alembic revision --autogenerate -m "autogen"
-
-
-migrate:
-	PYTHONPATH="${PYTHONPATH}" pipenv run alembic upgrade head
-
-
-install:
-	pipenv update --dev
+ATM := $(shell date +%Y%m%d_%H%M%S)
+DB1 := $(shell pipenv run dynaconf list | grep DB1 | sed -e 's/.*DB1: *//g')
 
 
 format:
@@ -27,5 +20,41 @@ format:
 	pipenv run black .
 
 
+install:
+	pipenv update --dev
+
+
+all: reflect reset_db1 revision format
+
+
+reflect:
+	@pipenv run sqlacodegen "${DB1}"
+	pipenv run sqlacodegen --outfile "${REFLECTION}" "${DB1}"
+	mv "${MODEL}" "${MODEL}.bak.${ATM}"
+	mv "${REFLECTION}" "${MODEL}"
+
+
+revision:
+	PYTHONPATH="${HERE}" pipenv run alembic revision --autogenerate -m "autogen"
+
+
+migrate:
+	PYTHONPATH="${HERE}" pipenv run alembic upgrade head
+
+
 reset_db1:
-	pipenv run python artifacts/reset_db1.py
+	pipenv run python "${SCRIPTS}/reset_db1.py"
+
+
+reset_db0:
+	pipenv run python "${SCRIPTS}/reset_db0.py"
+
+
+wipe: reset_db0 reset_db1
+	rm -rf "${MODEL}"
+	touch "${MODEL}"
+	rm -rf "${REFLECTION}"
+	rm -rf "${ARTIFACTS}/*.bak"
+	rm -rf "${MIGRATIONS}"
+	install -m 0755 -d "${MIGRATIONS}"
+	rm -rf Pipfile.lock
