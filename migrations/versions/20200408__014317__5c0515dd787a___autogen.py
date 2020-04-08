@@ -1,8 +1,8 @@
 """autogen
 
-Revision ID: 0e659e6be651
+Revision ID: 5c0515dd787a
 Revises: 
-Create Date: 2020-04-08 01:37:09.297657+00:00
+Create Date: 2020-04-08 01:43:17.756824+00:00
 
 """
 
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0e659e6be651'
+revision = '5c0515dd787a'
 down_revision = None
 branch_labels = None
 depends_on = None
