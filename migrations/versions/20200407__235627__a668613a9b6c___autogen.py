@@ -6,12 +6,11 @@ Create Date: 2020-04-07 23:56:27.906971+00:00
 
 """
 
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = 'a668613a9b6c'
+revision = "a668613a9b6c"
 down_revision = None
 branch_labels = None
 depends_on = None
