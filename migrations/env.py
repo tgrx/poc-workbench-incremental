@@ -51,8 +51,16 @@ def run_migrations_online():
     alembic_config_section["sqlalchemy.url"] = settings.DB0
 
     connectable = engine_from_config(
-        alembic_config_section, prefix="sqlalchemy.", poolclass=pool.NullPool,
+        alembic_config_section,
+        connect_args={"autocommit": False},
+        echo=True,
+        isolation_level="SERIALIZABLE",
+        poolclass=pool.NullPool,
+        prefix="sqlalchemy.",
     )
+
+    connectable.execute("SET autocommit = 0;")
+    connectable.execute("SET autocommit = OFF;")
 
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)

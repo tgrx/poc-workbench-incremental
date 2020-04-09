@@ -36,7 +36,7 @@ reflect_db1:
 
 
 reflect_db0:
-	@pipenv run sqlacodegen ${DB0} > /dev/null 2>&1
+	@pipenv run sqlacodegen ${DB0}
 	pipenv run sqlacodegen --outfile "${REFLECTION}" ${DB0}
 	mv "${MODEL}" "${MODEL}.bak.${ATM}"
 	mv "${REFLECTION}" "${MODEL}"
